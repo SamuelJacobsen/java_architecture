@@ -33,12 +33,23 @@ public class Software {
             lista_hash = (ArrayList<String>) obj.get(1);
             listai_hash = (ArrayList<String>) obj.get(2);
             
+        } catch (FileNotFoundException e) {
+            // Trate o caso em que o arquivo "save.obj" não foi encontrado
+            System.err.println("Arquivo 'save.obj' não encontrado: " + e.getMessage());
+        } catch (IOException e) {
+            // Trate exceções de E/S, como erro de leitura do arquivo
+            System.err.println("Erro de E/S ao ler 'save.obj': " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            // Trate exceções se a classe não for encontrada durante a desserialização
+            System.err.println("Classe não encontrada durante a desserialização: " + e.getMessage());
         } catch (Exception e) {
-            //tratar a excessão aqui com uma mensagem que diga alguma coisa
+            // Trate outras exceções inesperadas
+            System.err.println("Erro inesperado: " + e.getMessage());
+
         }
 
         String str;
-        // slk do while com um break dentro ainda, isso aqui da até justa causa, tenta fazer com outro tipo de iteração. Da pra fazer usando a API Stream do java 8
+        // slk do while com um break dentro ainda, isso aqui da até justa causa, fazer com outro tipo de iteração. Da pra fazer usando a API Stream do java 8
         do {
             str = sc.nextLine();
             if (str.length() <= 0) {
@@ -70,7 +81,7 @@ public class Software {
         objetos.add(lista_hash);
         objetos.add(listai_hash);
 
-        // envolver em um try catch e tratar uma possível excessão igual ele fez no primeiro, isso aqui pode dar erro e vai quebrar a sua execessão.
+        // envolver em um try catch e tratar uma possível excessão igual no primeiro, isso aqui pode dar erro e vai quebrar a sua execessão.
         FileOutputStream fileOut = new FileOutputStream("save.obj");
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
         objectOut.writeObject(objetos);
@@ -78,5 +89,5 @@ public class Software {
 
     }
 
-    // por fim acho que ele quer que vc faça os testes unitários também, não tem nada ali na pasta test
+    //não tem nada ali na pasta test
 }
